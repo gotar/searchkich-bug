@@ -13,6 +13,7 @@ describe Product do
     let(:create_products) do
       Product.create(name: 'abc')
       Product.create(name: 'cba')
+      # Product.searchkick_index.refresh # Will pass if we refresh after create but I think this should works automaticaly?
     end
 
     it 'return proper number of products when search by searchkick' do
