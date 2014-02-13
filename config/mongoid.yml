@@ -1,0 +1,13 @@
+test:
+  sessions:
+    default:
+      database: searchkick_bug_test
+      hosts:
+        - localhost:27017
+
+development:
+  sessions:
+    default:
+      database: searchkick_bug_dev
+      hosts:
+        - localhost:27017
