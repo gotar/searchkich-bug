@@ -13,7 +13,7 @@ describe Product do
     let(:create_products) do
       Product.create(name: 'abc')
       Product.create(name: 'cba')
-      # Product.searchkick_index.refresh # Will pass if we refresh after create but I think this should works automaticaly?
+      Product.searchkick_index.refresh
     end
 
     it 'return proper number of products when search by searchkick' do
@@ -29,6 +29,15 @@ describe Product do
     it 'return proper product when searching product created after reindex' do
       create_products
       expect(Product.search('abc').first.name).to eql('abc')
+    end
+
+    it 'return proper products with category relation' do
+      category = Category.create(name: 'category')
+      create_products
+      product = Product.last
+      product.categories << category
+      product.reload.categories.should == [category]
+      Product.search('*', where: {category_ids: category.id}).size.should == 1
     end
   end
 end
