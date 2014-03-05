@@ -37,6 +37,7 @@ describe Product do
       product = Product.last
       product.categories << category
       product.reload.categories.should == [category]
+      Product.searchkick_index.refresh
       Product.search('*', where: {category_ids: category.id}).size.should == 1
     end
   end
